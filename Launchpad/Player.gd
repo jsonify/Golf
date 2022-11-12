@@ -144,11 +144,10 @@ func _draw():
 
 	for i in range(1,10):
 		var end = global_position + vector*0.1*i # *energy
-		draw_circle(end,2,Color.white)
-
-	# draw_line(start_pos, end_pos, Color.blue, 8)
-	# draw_line(global_position, end, Color.white, 2)
-	#draw_triangle(end, vector.normalized(),Color.white, 4)
+#		draw_circle(end,2,Color.white)
+		draw_line(global_position, end, Color.blue, 8)
+#		draw_line(global_position, end, Color.white, 2)
+#		draw_triangle(end, vector.normalized(),Color.white, 4)
 
 func draw_triangle(pos, dir, color, size):
 	var a = pos + dir * size

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/throw.mp3-5a75d7db9b338db959eaec287e38b485.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/throw.mp3"
+dest_files=[ "res://.import/throw.mp3-5a75d7db9b338db959eaec287e38b485.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/weapon_12 (scrapped, not final).mp3-f4b636c08bfe69d3361db6673bd77264.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/weapon_12 (scrapped, not final).mp3"
+dest_files=[ "res://.import/weapon_12 (scrapped, not final).mp3-f4b636c08bfe69d3361db6673bd77264.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

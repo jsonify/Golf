@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/swish_1.mp3-ef006ad74122e55baf10e635c88dccef.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/swish_1.mp3"
+dest_files=[ "res://.import/swish_1.mp3-ef006ad74122e55baf10e635c88dccef.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
