@@ -1,0 +1,129 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://assets/sounds/bounce.wav" type="AudioStream" id=1]
+[ext_resource path="res://assets/sounds/die-short.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/sounds/charge-fast.wav" type="AudioStream" id=3]
+[ext_resource path="res://Launchpad/Trail.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Launchpad/Player.gd" type="Script" id=5]
+[ext_resource path="res://assets/art/tiles.png" type="Texture" id=6]
+[ext_resource path="res://Environment/WorldEnvironment.tscn" type="PackedScene" id=7]
+
+[sub_resource type="PhysicsMaterial" id=1]
+bounce = 0.75
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
+[sub_resource type="SphereMesh" id=3]
+radius = 16.0
+height = 32.0
+
+[sub_resource type="SphereMesh" id=4]
+radius = 14.0
+height = 28.0
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 64.0
+
+[node name="Start" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.14902, 0.172549, 0.211765, 1 )
+margin_right = 1032.0
+margin_bottom = 608.0
+texture = ExtResource( 6 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2( 200, 328 )
+z_index = 2
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.5
+continuous_cd = 2
+contacts_reported = 2
+contact_monitor = true
+script = ExtResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource( 2 )
+
+[node name="Trail" parent="Player" instance=ExtResource( 4 )]
+modulate = Color( 1, 1, 1.3, 1 )
+z_index = 1
+
+[node name="BallMesh" type="MeshInstance2D" parent="Player"]
+modulate = Color( 0.235294, 0.317647, 0.509804, 1 )
+mesh = SubResource( 3 )
+
+[node name="BallGlow" type="MeshInstance2D" parent="Player"]
+modulate = Color( 0.45098, 0.619608, 1, 1 )
+mesh = SubResource( 3 )
+
+[node name="EnergyIndicator" type="MeshInstance2D" parent="Player"]
+modulate = Color( 0.6, 0.8, 1.4, 1 )
+mesh = SubResource( 4 )
+
+[node name="Launchpad" type="Area2D" parent="Player"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Launchpad"]
+shape = SubResource( 5 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 1 )
+
+[node name="DieAudio" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 2 )
+
+[node name="ChargeAudio" type="AudioStreamPlayer" parent="Player"]
+stream = ExtResource( 3 )
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 7 )]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="BallMesh" type="MeshInstance2D" parent="Node2D"]
+modulate = Color( 0.235294, 0.317647, 0.509804, 1 )
+position = Vector2( 319.982, 256 )
+mesh = SubResource( 3 )
+
+[node name="BallGlow" type="MeshInstance2D" parent="Node2D"]
+modulate = Color( 0.45098, 0.619608, 1, 1 )
+position = Vector2( 319.982, 256 )
+mesh = SubResource( 3 )
+
+[node name="EnergyIndicator" type="MeshInstance2D" parent="Node2D"]
+modulate = Color( 0.6, 0.8, 1.4, 1 )
+position = Vector2( 319.982, 256 )
+mesh = SubResource( 4 )
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2( 0, 128 )
+
+[node name="BallMesh2" type="MeshInstance2D" parent="Node2D2"]
+modulate = Color( 0.235294, 0.317647, 0.509804, 1 )
+position = Vector2( 319.982, 256 )
+mesh = SubResource( 3 )
+
+[node name="BallGlow2" type="MeshInstance2D" parent="Node2D2"]
+modulate = Color( 0.45098, 0.619608, 1, 0.486275 )
+position = Vector2( 319.982, 256 )
+mesh = SubResource( 3 )
+
+[node name="EnergyIndicator2" type="MeshInstance2D" parent="Node2D2"]
+modulate = Color( 0.6, 0.8, 1.4, 1 )
+position = Vector2( 319.982, 256 )
+scale = Vector2( 0.431956, 0.431956 )
+mesh = SubResource( 4 )
+[connection signal="body_entered" from="Player" to="Player" method="_on_Player_body_entered"]
+[connection signal="input_event" from="Player/Launchpad" to="Player" method="_on_Launchpad_input_event"]
+[connection signal="finished" from="Player/DieAudio" to="Player" method="_on_DieAudio_finished"]

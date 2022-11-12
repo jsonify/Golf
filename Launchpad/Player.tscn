@@ -1,0 +1,75 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Launchpad/Player.gd" type="Script" id=1]
+[ext_resource path="res://Launchpad/Trail.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/sounds/bounce.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/charge-fast.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/sounds/die-short.wav" type="AudioStream" id=5]
+
+[sub_resource type="PhysicsMaterial" id=1]
+bounce = 0.75
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
+
+[sub_resource type="SphereMesh" id=3]
+radius = 16.0
+height = 32.0
+
+[sub_resource type="SphereMesh" id=4]
+radius = 14.0
+height = 28.0
+
+[node name="Player" type="RigidBody2D"]
+z_index = 2
+mass = 5.0
+physics_material_override = SubResource( 1 )
+gravity_scale = 0.5
+continuous_cd = 2
+contacts_reported = 1
+contact_monitor = true
+script = ExtResource( 1 )
+force = 4000
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Trail" parent="." instance=ExtResource( 2 )]
+modulate = Color( 1, 1, 1.3, 1 )
+z_index = 1
+
+[node name="BallMesh" type="MeshInstance2D" parent="."]
+modulate = Color( 0.235294, 0.317647, 0.509804, 1 )
+mesh = SubResource( 3 )
+
+[node name="BallGlow" type="MeshInstance2D" parent="."]
+modulate = Color( 0.45098, 0.619608, 1, 1 )
+mesh = SubResource( 3 )
+
+[node name="EnergyIndicator" type="MeshInstance2D" parent="."]
+modulate = Color( 0.6, 0.8, 1.4, 1 )
+mesh = SubResource( 4 )
+
+[node name="Visualizer" type="MeshInstance2D" parent="."]
+visible = false
+modulate = Color( 1, 0.686275, 0, 1 )
+scale = Vector2( 0.2, 0.2 )
+z_index = 3
+mesh = SubResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="DieAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="ChargeAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = 0
+limit_top = 0
+limit_bottom = 0
+[connection signal="body_entered" from="." to="." method="_on_Player_body_entered"]
+[connection signal="finished" from="DieAudio" to="." method="_on_DieAudio_finished"]
